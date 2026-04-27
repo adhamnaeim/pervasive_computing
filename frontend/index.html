@@ -9,28 +9,32 @@
     <script src="dashboard.js"></script>
 </head>
 
-<body style="background-color: rgb(70, 132, 50);">
-    <h1 style="text-align: center; background-color: rgb(154, 216, 114); width: auto; height: auto; margin: 0px 0px 10px 0px; padding: 10px 0 10px 0;" >Allergy Dashboard</h1>
-    <div class="flexContainer">
-        <div class="flexChildren">
-            <h4 class="flexChildren-title">Temperature (C°)</h4>
-            <div id="temp-sensor">-data here-</div>
+<body>
+    <div class="heading">
+        <h1>Allergy Exposure Data Portal</h1>
+        <p id="timestamp">Last updated: Just now</p>
+    </div>
+
+    <div class="grid">
+        <div class="grid-item">
+            <label>Temperature</label>
+            <div class="grid-item-data" id="temp-sensor">-- °C</div>
         </div>
-        <div class="flexChildren">
-            <h4 class="flexChildren-title">Humidity (%)</h4>
-            <div id="humidity-sensor">-data here-</div>
+        <div class="grid-item">
+            <label>Humidity</label>
+            <div class="grid-item-data" id="humidity-sensor">-- %</div>
         </div>
-        <div class="flexChildren">
-            <h4 class="flexChildren-title">Dust Pollution</h4>
-            <div id="dust-sensor">-data here-</div>
+        <div class="grid-item">
+            <label>Dust Pollution</label>
+            <div class="grid-item-data" id="dust-sensor">-- ppm?</div>
         </div>
-        <div class="flexChildren">
-            <h4 class="flexChildren-title">CO2 Pollution</h4>
-            <div id="co2-sensor">-data here-</div>
+        <div class="grid-item highlight">
+            <label>CO2 Level</label>
+            <div class="grid-item-data" id="co2-sensor">-- ppm?</div>
         </div>
-        <div class="flexChildren">
-            <h4 class="flexChildren-title">CO Pollution</h4>
-            <div id="co-sensor">-data here-</div>
+        <div class="grid-item highlight">
+            <label>CO Level</label>
+            <div class="grid-item-data" id="co-sensor">-- ppm?</div>
         </div>
     </div>
 </body>
