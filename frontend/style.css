@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@100..900&family=Oxygen:wght@700&display=swap');
+
+:root {
+    --family: "Noto+Serif"
+}
+
+body, body * {
+    font-family: var(--family), Tahoma, Verdana, sans-serif;
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    gap: 5px;
+}
+
+.flexChildren {
+    flex-grow: 1;
+    flex-basis: auto;
+    margin: auto;
+    background-color: rgb(255, 239, 145);
+    border: 2.5px solid rgb(255, 160, 46);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.flexChildren-title {
+    font-family: "Oxygen", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    margin: 5px 0px 10px 0px;
+}
