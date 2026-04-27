@@ -4,13 +4,11 @@ evtSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
     console.log("New measurement received:", data);
     
-    // Update UI elements here
-    //TODO add ui elements by id here
-    document.getElementById("temp-sensor").innerText = data.temperature;
-    document.getElementById("humidity-sensor").innerText = data.temperature;
-    document.getElementById("dust-sensor").innerText = data.temperature;
-    document.getElementById("co2-sensor").innerText = data.temperature;
-    document.getElementById("co-sensor").innerText = data.temperature;
+    document.getElementById("temp-sensor").innerText = ##TODO## //e.g. data.temperature;
+    document.getElementById("humidity-sensor").innerText = ##TODO## ;
+    document.getElementById("dust-sensor").innerText =##TODO## ;
+    document.getElementById("co2-sensor").innerText = ##TODO## ;
+    document.getElementById("co-sensor").innerText = ##TODO## ;
 };
 
 evtSource.onerror = function(err) {
