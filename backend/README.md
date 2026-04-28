@@ -26,6 +26,10 @@ REST API connecting to the MariaDB database on the Raspberry Pi.
    uvicorn main:app --reload
    ```
 
+   ```bash
+    ~/.local/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+   ```
+
 ## Endpoints
 
 | Method | URL | Description |
