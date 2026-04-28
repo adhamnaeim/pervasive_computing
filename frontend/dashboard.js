@@ -1,4 +1,4 @@
-const evtSource = new EventSource("http://192.168.1.188:8000/api/measurements/latest");
+const evtSource = new EventSource("http://192.168.1.188:8000/events");
 
 evtSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
