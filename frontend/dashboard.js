@@ -8,7 +8,6 @@ evtSource.onmessage = function(event) {
     document.getElementById("humidity-sensor").innerText = ##TODO## ;
     document.getElementById("dust-sensor").innerText =##TODO## ;
     document.getElementById("co2-sensor").innerText = ##TODO## ;
-    document.getElementById("co-sensor").innerText = ##TODO## ;
 };
 
 evtSource.onerror = function(err) {
