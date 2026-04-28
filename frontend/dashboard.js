@@ -1,15 +1,15 @@
-const evtSource = new EventSource("http://ourBackendIP:port/events");
+const evtSource = new EventSource("http://localhost:8000/events");
 
 evtSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
     console.log("New measurement received:", data);
     
-    document.getElementById("temp-sensor").innerText = ##TODO## //e.g. data.temperature;
-    document.getElementById("humidity-sensor").innerText = ##TODO## ;
-    document.getElementById("dust-sensor").innerText =##TODO## ;
-    document.getElementById("co2-sensor").innerText = ##TODO## ;
+    document.getElementById("temp-sensor").innerText = data.temp_c ?? "N/A";
+    document.getElementById("humidity-sensor").innerText = data.humidity ?? "N/A";
+    document.getElementById("dust-sensor").innerText = data.dust_pcs ?? "N/A";
+    document.getElementById("co2-sensor").innerText = data.co2_ppm ?? "N/A";
 };
 
 evtSource.onerror = function(err) {
-    console.error("EventSource failed:", err);
+    console.error("SSE connection lost:", err);
 };
