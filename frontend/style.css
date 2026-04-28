@@ -21,6 +21,9 @@ body {
     background-color: var(--bg);
     color: #333;
     padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, label {
@@ -42,6 +45,10 @@ h1, h2, label {
 }
 
 .grid {
+    /* --- if we want bigger items --- */
+    /* flex-grow: 1;
+    align-content: start; */
+    
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
