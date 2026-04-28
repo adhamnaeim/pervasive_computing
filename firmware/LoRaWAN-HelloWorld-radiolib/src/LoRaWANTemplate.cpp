@@ -105,7 +105,7 @@ void setup() {
     std::string uplinkPayload = RADIOLIB_LORAWAN_PAYLOAD;
     uint8_t fPort = 221;
 
-#define SENSOR_COUNT 4
+#define SENSOR_COUNT 3
 
     uint8_t currentSensor = (bootCount - 1) % SENSOR_COUNT; // Starting at zero (0)
 
@@ -144,21 +144,6 @@ void setup() {
         }
             
         case 2: {
-            // CO
-            float co = 20.0; // Placeholder value, replace with actual sensor reading
-            Serial.println(F("[APP] Read CO sensor:"));
-            Serial.print(F("  CO: "));
-            Serial.print(co);
-            Serial.println(F(" ppm"));
-
-            if (!isnan(co)) {
-                fPort = currentSensor + 1; // 3 is CO
-                uplinkPayload = std::to_string(co);
-            }
-            break; 
-        }
-            
-        case 3: {
             // Dust Sensor
             uint16_t dust = 100; // Placeholder value, replace with actual sensor reading
             Serial.println(F("[APP] Read Dust sensor:"));
@@ -167,7 +152,7 @@ void setup() {
             Serial.println(F(" pcs/0.01cf"));
 
             if (!isnan(dust)) {
-                fPort = currentSensor + 1; // 4 is Dust
+                fPort = currentSensor + 1; // 3 is Dust
                 uplinkPayload = std::to_string(dust);
             }
             break;
