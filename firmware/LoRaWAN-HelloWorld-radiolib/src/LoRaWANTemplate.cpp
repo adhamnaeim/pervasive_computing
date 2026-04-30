@@ -196,7 +196,7 @@ void setup() {
 
             if (!isnan(concentration)) {
                 fPort = currentSensor + 1; // 3 is Dust
-                uplinkPayload = std::to_string(concentration);
+                uplinkPayload = std::to_string((uint16_t)(concentration + 0.5)); // Round to nearest integer
             }
             break;
         }
