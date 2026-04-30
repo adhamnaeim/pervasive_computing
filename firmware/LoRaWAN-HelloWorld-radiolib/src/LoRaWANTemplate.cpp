@@ -37,6 +37,18 @@ RTC_DATA_ATTR uint16_t bootCount = 0;
 #define DHTTYPE DHT11   // Sensor type
 #define DUSTPIN 16      // Dust sensor data pin
 
+// CO2 defines
+#define MQ135PIN 34     // MQ135 CO2 sensor data pin
+#define ADC_MAX 4095.0
+#define V_ADC 3.3
+#define VCC 5.0 
+#define RL 10000.0      // Sensor resistor
+#define R1 10000.0      // Voltage divider resistor 1
+#define R2 20000.0      // Voltage divider resistor 2
+#define R0 81626.35     // sensor baseline calibration
+#define A 132.32        // curve parameter 1
+#define B -2.95         // curve parameter 2
+
 unsigned long duration;
 unsigned long starttime;
 unsigned long sampletime_ms = 2000;//sampe 30s&nbsp;;
@@ -91,6 +103,7 @@ void goToSleep(uint32_t seconds) {
 
 void setup() {
     Serial.begin(115200);
+    analogSetAttenuation(ADC_11db);
 
     pinMode(DUSTPIN,INPUT);
 
@@ -142,7 +155,13 @@ void setup() {
             
         case 1: {
             // CO2
-            float co2 = 400.0; // Placeholder value, replace with actual sensor reading
+            int adc = analogRead(MQ135PIN);
+            float Vmeas = (adc / ADC_MAX) * V_ADC;
+            float Vout = Vmeas * ((R1 + R2) / R2);
+            if (Vout < 0.01) Vout = 0.01;
+            float Rs = RL * ((VCC / Vout) - 1.0);
+            float ratio = Rs / R0;
+            float co2 = A * pow(ratio, B);
             Serial.println(F("[APP] Read CO2 sensor:"));
             Serial.print(F("  CO2: "));
             Serial.print(co2);
