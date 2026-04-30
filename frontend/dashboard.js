@@ -9,7 +9,7 @@ const THRESHOLDS = {
 
 evtSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
-    console.log("New measurement received:", data);
+    // console.log("New measurement received:", data);
     
     if (data) {
         if(data.ts != null) {
