@@ -11,7 +11,7 @@ const THRESHOLDS = {
 evtSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
     if (data && data.ts != null) {
-        document.getElementById("timestamp").innerText = `Last updated: ${formatDateTime(data.ts)}`;
+        document.getElementById("timestamp").innerText = `Last update: ${formatDateTime(data.ts)}`;
     }
     refreshGrid();
 };
@@ -33,7 +33,7 @@ function formatDateTime(tsStr) {
 function updateSensor(id, value, threshold, unit, ts) {
     const element  = document.getElementById(id);
     const parentEl = element.parentElement;
-    const tsEl     = document.getElementById(`${id}-ts`);
+    const tsEl     = document.getElementById(`Last updated: ${id}-ts`);
 
     element.innerText = `${value} ${unit}`;
     if (tsEl && ts) tsEl.innerText = formatDateTime(ts);
