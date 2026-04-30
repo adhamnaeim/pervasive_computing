@@ -74,7 +74,17 @@ pervasive_computing/
 | Raspberry Pi hostname | `admin420` |
 | SSH command | `ssh admin420@192.168.1.188` |
 | Dashboard URL | `http://192.168.1.188:8080` |
-| Backend API | `http://192.168.1.188:8000` |
+| Backend API | `http://192.168.1.188:8000/` |
+
+---
+
+## Backend API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/measurements/latest` | Latest 20 events |
+| `GET /api/devices` | List of registered devices |
+| `GET /events` | SSE route |
 
 ---
 
@@ -143,15 +153,6 @@ CREATE TABLE measurements (
   FOREIGN KEY (device_id) REFERENCES devices(device_id)
 );
 ```
-
----
-
-## Backend API Endpoints
-
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/measurements/latest` | Latest measurement per device |
-| `GET /api/devices` | List of registered devices |
 
 ---
 
