@@ -5,10 +5,10 @@ evtSource.onmessage = function(event) {
     console.log("New measurement received:", data);
     
     document.getElementById("timestamp").innerText = `Last updated: ${data.ts}`;
-    if (data.ts != null) document.getElementById("temp-sensor").innerText = `${data.temp_c} °C`;
-    if (data.ts != null) document.getElementById("humidity-sensor").innerText = `${data.humidity} %`;
-    if (data.ts != null) document.getElementById("dust-sensor").innerText = `${data.dust_pcs} ppm`;
-    if (data.ts != null) document.getElementById("co2-sensor").innerText = `${data.co2_ppm} ppm`;
+    if (data.temp_c != null) document.getElementById("temp-sensor").innerText = `${data.temp_c} °C`;
+    if (data.humidity != null) document.getElementById("humidity-sensor").innerText = `${data.humidity} %`;
+    if (data.dust_pcs != null) document.getElementById("dust-sensor").innerText = `${data.dust_pcs} ppm`;
+    if (data.co2_ppm != null) document.getElementById("co2-sensor").innerText = `${data.co2_ppm} ppm`;
 };
 
 evtSource.onerror = function(err) {
