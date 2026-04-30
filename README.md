@@ -73,8 +73,8 @@ pervasive_computing/
 | Raspberry Pi IP | `192.168.1.188` |
 | Raspberry Pi hostname | `admin420` |
 | SSH command | `ssh admin420@192.168.1.188` |
-| Dashboard URL | `http://192.168.1.188:8080` |
-| Backend API | `http://192.168.1.188:8000` |
+| Dashboard URL | http://192.168.1.188:8080 |
+| Backend API | http://192.168.1.188:8000 |
 
 ---
 
