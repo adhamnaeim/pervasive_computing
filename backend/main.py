@@ -56,6 +56,79 @@ def get_devices():
     conn.close()
     return rows
 
+@app.get("/api/measurements/today/temperature")
+def get_today_temperature():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT m.ts, m.temp_c
+        FROM measurements m
+        WHERE DATE(m.ts) = CURDATE()
+          AND m.temp_c IS NOT NULL
+          AND m.temp_c != 0
+          AND m.temp_c BETWEEN -40 AND 60
+        ORDER BY m.ts ASC
+    """)
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
+@app.get("/api/measurements/today/humidity")
+def get_today_humidity():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT m.ts, m.humidity
+        FROM measurements m
+        WHERE DATE(m.ts) = CURDATE()
+          AND m.humidity IS NOT NULL
+          AND m.humidity != 0
+          AND m.humidity BETWEEN 1 AND 100
+        ORDER BY m.ts ASC
+    """)
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
+@app.get("/api/measurements/today/co2")
+def get_today_co2():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT m.ts, m.co2_ppm
+        FROM measurements m
+        WHERE DATE(m.ts) = CURDATE()
+          AND m.co2_ppm IS NOT NULL
+          AND m.co2_ppm != 0
+          AND m.co2_ppm BETWEEN 1 AND 5000
+        ORDER BY m.ts ASC
+    """)
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
+@app.get("/api/measurements/today/dust")
+def get_today_dust():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT m.ts, m.dust_pcs
+        FROM measurements m
+        WHERE DATE(m.ts) = CURDATE()
+          AND m.dust_pcs IS NOT NULL
+          AND m.dust_pcs != 0
+          AND m.dust_pcs != 1
+          AND m.dust_pcs BETWEEN 1 AND 50000
+        ORDER BY m.ts ASC
+    """)
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rows
+
 @app.get("/events")
 async def sse_events():
     async def event_generator():

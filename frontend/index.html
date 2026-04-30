@@ -6,7 +6,8 @@
     <title>Pervasive Computing Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    <script src="dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js" defer></script>
 </head>
 
 <body>
@@ -31,6 +32,21 @@
         <div class="grid-item">
             <label>CO2 Level</label>
             <div class="grid-item-data" id="co2-sensor">N/A</div>
+        </div>
+    </div>
+
+    <div class="charts-section">
+        <div class="charts-header">
+            <h2>Today's Measurements</h2>
+            <select id="sensor-select">
+                <option value="temperature">Temperature (°C)</option>
+                <option value="humidity">Humidity (%)</option>
+                <option value="co2">CO2 (ppm)</option>
+                <option value="dust">Dust (pcs)</option>
+            </select>
+        </div>
+        <div class="chart-card">
+            <canvas id="chart-sensor"></canvas>
         </div>
     </div>
 </body>
