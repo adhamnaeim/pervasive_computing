@@ -34,7 +34,7 @@ def get_latest_measurements():
     cursor.execute("""
         SELECT m.id, m.device_id, m.ts,
                m.temp_c, m.humidity,
-               m.co2_ppm, m.co_ppm, m.dust_pcs,
+               m.co2_ppm, m.dust_pcs,
                m.raw_json, d.name AS device_name
         FROM measurements m
         LEFT JOIN devices d ON m.device_id = d.device_id
@@ -64,14 +64,14 @@ async def sse_events():
             conn = get_connection()
             cursor = conn.cursor(dictionary=True)
             cursor.execute("""
-                SELECT m.id, m.device_id, m.ts,
-                       m.temp_c, m.humidity,
-                       m.co2_ppm, m.co_ppm, m.dust_pcs,
-                       d.name AS device_name
-                FROM measurements m
-                LEFT JOIN devices d ON m.device_id = d.device_id
-                ORDER BY m.ts DESC LIMIT 1
-            """)
+            SELECT m.id, m.device_id, m.ts,
+            m.temp_c, m.humidity,
+            m.co2_ppm, m.dust_pcs,
+               d.name AS device_name
+        FROM measurements m
+        LEFT JOIN devices d ON m.device_id = d.device_id
+        ORDER BY m.ts DESC LIMIT 1
+    """)
             row = cursor.fetchone()
             cursor.close()
             conn.close()
