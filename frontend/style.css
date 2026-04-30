@@ -81,6 +81,13 @@ h1, h2, label {
     font-weight: 700;
 }
 
+.grid-item-ts {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: #888;
+}
+
 /* ── Charts ─────────────────────────────────────────────── */
 
 .charts-section {

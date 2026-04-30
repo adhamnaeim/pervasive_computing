@@ -10,48 +10,72 @@ const THRESHOLDS = {
 
 evtSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
-    // console.log("New measurement received:", data);
-    
-    if (data) {
-        if(data.ts != null) {
-            const date = new Date(data.ts)
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            const formattedTime = `${day}.${month}.${year} ${hours}:${minutes}`;
-            document.getElementById("timestamp").innerText = `Last updated: ${formattedTime}`;
-        }
-
-        if (data.temp_c != null) updateSensor("temp-sensor", data.temp_c, THRESHOLDS.temp, "°C");
-        if (data.humidity != null) updateSensor("humidity-sensor", data.humidity, THRESHOLDS.humidity, "%");
-        if (data.dust_pcs != null) updateSensor("dust-sensor", data.dust_pcs, THRESHOLDS.dust, "pcs");
-        if (data.co2_ppm != null) updateSensor("co2-sensor", data.co2_ppm, THRESHOLDS.co2, "ppm");
+    if (data && data.ts != null) {
+        document.getElementById("timestamp").innerText = `Last updated: ${formatDateTime(data.ts)}`;
     }
+    refreshGrid();
 };
 
 evtSource.onerror = function(err) {
     console.error("SSE connection lost:", err);
 };
 
+function formatDateTime(tsStr) {
+    const d = new Date(tsStr);
+    const day   = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year  = d.getFullYear();
+    const hh    = String(d.getHours()).padStart(2, '0');
+    const mm    = String(d.getMinutes()).padStart(2, '0');
+    return `${day}.${month}.${year} ${hh}:${mm}`;
+}
 
-
-function updateSensor(id, value, threshold, unit) {
-    const element = document.getElementById(id);
+function updateSensor(id, value, threshold, unit, ts) {
+    const element  = document.getElementById(id);
     const parentEl = element.parentElement;
+    const tsEl     = document.getElementById(`${id}-ts`);
 
     element.innerText = `${value} ${unit}`;
+    if (tsEl && ts) tsEl.innerText = formatDateTime(ts);
 
-    const lowerThanThreshold = threshold.max !== undefined && value > threshold.max;
+    const lowerThanThreshold  = threshold.max !== undefined && value > threshold.max;
     const higherThanThreshold = threshold.min !== undefined && value < threshold.min;
-    
-    if (higherThanThreshold || lowerThanThreshold ) {
+
+    if (higherThanThreshold || lowerThanThreshold) {
         parentEl.classList.add("highlight");
     } else {
         parentEl.classList.remove("highlight");
     }
 }
+
+async function refreshGrid() {
+    try {
+        const [tempRows, humRows, co2Rows, dustRows] = await Promise.all([
+            fetch(`${API_BASE}/api/measurements/today/temperature`).then(r => r.json()),
+            fetch(`${API_BASE}/api/measurements/today/humidity`).then(r => r.json()),
+            fetch(`${API_BASE}/api/measurements/today/co2`).then(r => r.json()),
+            fetch(`${API_BASE}/api/measurements/today/dust`).then(r => r.json()),
+        ]);
+
+        const last = arr => arr.length ? arr[arr.length - 1] : null;
+
+        const t = last(tempRows);
+        const h = last(humRows);
+        const c = last(co2Rows);
+        const d = last(dustRows);
+
+        if (t) updateSensor("temp-sensor",     t.temp_c,   THRESHOLDS.temp,     "°C",  t.ts);
+        if (h) updateSensor("humidity-sensor", h.humidity, THRESHOLDS.humidity, "%",   h.ts);
+        if (c) updateSensor("co2-sensor",      c.co2_ppm,  THRESHOLDS.co2,      "ppm", c.ts);
+        if (d) updateSensor("dust-sensor",     d.dust_pcs, THRESHOLDS.dust,     "pcs", d.ts);
+    } catch (e) {
+        console.error("Failed to refresh grid", e);
+    }
+}
+
+// Initial grid load + refresh every 30 s
+refreshGrid();
+setInterval(refreshGrid, 30000);
 
 // ── Line chart ───────────────────────────────────────────────
 
