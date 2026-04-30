@@ -33,10 +33,10 @@ function formatDateTime(tsStr) {
 function updateSensor(id, value, threshold, unit, ts) {
     const element  = document.getElementById(id);
     const parentEl = element.parentElement;
-    const tsEl     = document.getElementById(`Last updated: ${id}-ts`);
+    const tsEl     = document.getElementById(`${id}-ts`);
 
     element.innerText = `${value} ${unit}`;
-    if (tsEl && ts) tsEl.innerText = formatDateTime(ts);
+    if (tsEl && ts) tsEl.innerText = `Last updated: ${formatDateTime(ts)}`;
 
     const lowerThanThreshold  = threshold.max !== undefined && value > threshold.max;
     const higherThanThreshold = threshold.min !== undefined && value < threshold.min;
