@@ -82,8 +82,8 @@ setInterval(refreshGrid, 30000);
 const SENSOR_CONFIG = {
     temperature: { url: `${API_BASE}/api/measurements/today/temperature`, key: "temp_c",   label: "Temperature (°C)", color: "rgb(220, 80, 60)",  bg: "rgba(220, 80, 60, 0.15)" },
     humidity:    { url: `${API_BASE}/api/measurements/today/humidity`,    key: "humidity", label: "Humidity (%)",      color: "rgb(60, 130, 220)", bg: "rgba(60, 130, 220, 0.15)" },
-    co2:         { url: `${API_BASE}/api/measurements/today/co2`,         key: "co2_ppm", label: "CO2 (ppm)",         color: "rgb(70, 132, 50)",  bg: "rgba(70, 132, 50, 0.15)" },
     dust:        { url: `${API_BASE}/api/measurements/today/dust`,        key: "dust_pcs",label: "Dust (pcs)",        color: "rgb(180, 120, 40)", bg: "rgba(180, 120, 40, 0.15)" },
+    co2:         { url: `${API_BASE}/api/measurements/today/co2`,         key: "co2_ppm", label: "CO2 (ppm)",         color: "rgb(70, 132, 50)",  bg: "rgba(70, 132, 50, 0.15)" },
 };
 
 function formatTime(tsStr) {
