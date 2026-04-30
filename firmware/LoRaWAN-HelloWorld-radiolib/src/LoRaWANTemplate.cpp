@@ -33,8 +33,16 @@ RTC_DATA_ATTR uint16_t bootCount = 0;
 #include "LoRaWAN.hpp"
 #include <DHT.h>
 
-#define DHTPIN 15        // Data pin
+#define DHTPIN 15       // Data pin
 #define DHTTYPE DHT11   // Sensor type
+#define DUSTPIN 16      // Dust sensor data pin
+
+unsigned long duration;
+unsigned long starttime;
+unsigned long sampletime_ms = 2000;//sampe 30s&nbsp;;
+unsigned long lowpulseoccupancy = 0;
+float ratio = 0;
+float concentration = 0;
 
 static GAIT::LoRaWAN<RADIOLIB_LORA_MODULE> loRaWAN(RADIOLIB_LORA_REGION,
                                                    RADIOLIB_LORAWAN_JOIN_EUI,
@@ -83,6 +91,10 @@ void goToSleep(uint32_t seconds) {
 
 void setup() {
     Serial.begin(115200);
+
+    pinMode(DUSTPIN,INPUT);
+
+    starttime = millis();//get the current time;
     while (!Serial)
         ;        // wait for serial to be initalised
     delay(2000); // give time to switch to the serial monitor
@@ -145,15 +157,27 @@ void setup() {
             
         case 2: {
             // Dust Sensor
-            uint16_t dust = 100; // Placeholder value, replace with actual sensor reading
+            lowpulseoccupancy = 0;
+            starttime = millis();
+            
+            Serial.println(F("[APP] Reading Dust sensor for 30 seconds..."));
+
+            while ((millis() - starttime) < 30000) {
+                duration = pulseIn(DUSTPIN, LOW);
+                lowpulseoccupancy += duration;
+            }
+
+            ratio = lowpulseoccupancy / (30000.0 * 10.0);
+            concentration = 1.1*pow(ratio,3) - 3.8*pow(ratio,2) + 520*ratio + 0.62;
+
             Serial.println(F("[APP] Read Dust sensor:"));
             Serial.print(F("  Dust: "));
-            Serial.print(dust);
+            Serial.print(concentration);
             Serial.println(F(" pcs/0.01cf"));
 
-            if (!isnan(dust)) {
+            if (!isnan(concentration)) {
                 fPort = currentSensor + 1; // 3 is Dust
-                uplinkPayload = std::to_string(dust);
+                uplinkPayload = std::to_string(concentration);
             }
             break;
         }
