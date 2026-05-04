@@ -111,6 +111,7 @@ const sensorChart = new Chart(
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: {
                 x: { ticks: { maxTicksLimit: 10, maxRotation: 0 } },

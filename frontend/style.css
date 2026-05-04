@@ -44,6 +44,14 @@ h1, h2, label {
     font-size: 2.5rem;
 }
 
+.dashboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    flex-grow: 1; 
+    width: 100%;
+}
+
 .grid {
     /* --- if we want bigger items --- */
     /* flex-grow: 1;
@@ -52,7 +60,7 @@ h1, h2, label {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
 }
 
 .grid-item {
@@ -91,7 +99,11 @@ h1, h2, label {
 /* ── Charts ─────────────────────────────────────────────── */
 
 .charts-section {
-    margin-top: 20px;
+    margin-top: 0; 
+    flex: 1 1 0%; /* Tells flexbox to distribute space evenly */
+    min-width: 0; /* Prevents flexbox blowout */
+    display: flex;
+    flex-direction: column;
 }
 
 .charts-section h2 {
@@ -137,6 +149,11 @@ h1, h2, label {
     border: 1px solid var(--light-green);
     border-radius: 4px;
     box-shadow: 4px 4px 0px var(--light-green);
+    
+    position: relative; /* CRITICAL: Chart.js needs this to track height */
+    flex-grow: 1; /* Allows the card to fill the rest of the column */
+    min-height: 300px; /* Gives a baseline height for mobile */
+    width: 100%;
 }
 
 .chart-card label {
@@ -147,4 +164,44 @@ h1, h2, label {
     font-size: 0.8rem;
     color: var(--dark-green);
     margin-bottom: 12px;
+}
+
+/* --- Add Media Query for Laptop/Desktop Screens --- */
+@media (min-width: 1024px) {
+    .dashboard-wrapper {
+        flex-direction: row; 
+        align-items: stretch; 
+        max-height: calc(100vh - 180px); 
+    }
+
+    .grid {
+        grid-template-columns: 1fr; 
+        min-width: 250px; 
+        width: 300px; 
+        overflow-y: auto; 
+        padding-right: 15px; 
+        align-content: start; 
+        
+        /* 1. Reduce the gap between boxes */
+        gap: 12px; 
+    }
+
+    /* 2. Shrink the padding inside the boxes */
+    .grid-item {
+        padding: 16px 20px; 
+    }
+
+    /* 3. Slightly reduce the large number font size */
+    .grid-item-data {
+        font-size: 1.8rem; 
+    }
+
+    /* 4. Tighten up the margins on the labels and timestamps */
+    .grid-item label {
+        margin-bottom: 4px; 
+    }
+
+    .grid-item-ts {
+        margin-top: 4px; 
+    }
 }

@@ -15,42 +15,43 @@
         <h1>Allergy Exposure Data Portal</h1>
         <p id="timestamp">Last updated: --</p>
     </div>
+    <div class="dashboard-wrapper">
+        <div class="grid">
+            <div class="grid-item">
+                <label>Temperature</label>
+                <div class="grid-item-data" id="temp-sensor">N/A</div>
+                <span class="grid-item-ts" id="temp-sensor-ts"></span>
+            </div>
+            <div class="grid-item">
+                <label>Humidity</label>
+                <div class="grid-item-data" id="humidity-sensor">N/A</div>
+                <span class="grid-item-ts" id="humidity-sensor-ts"></span>
+            </div>
+            <div class="grid-item">
+                <label>Dust Pollution</label>
+                <div class="grid-item-data" id="dust-sensor">N/A</div>
+                <span class="grid-item-ts" id="dust-sensor-ts"></span>
+            </div>
+            <div class="grid-item">
+                <label>CO2 Level</label>
+                <div class="grid-item-data" id="co2-sensor">N/A</div>
+                <span class="grid-item-ts" id="co2-sensor-ts"></span>
+            </div>
+        </div>
 
-    <div class="grid">
-        <div class="grid-item">
-            <label>Temperature</label>
-            <div class="grid-item-data" id="temp-sensor">N/A</div>
-            <span class="grid-item-ts" id="temp-sensor-ts"></span>
-        </div>
-        <div class="grid-item">
-            <label>Humidity</label>
-            <div class="grid-item-data" id="humidity-sensor">N/A</div>
-            <span class="grid-item-ts" id="humidity-sensor-ts"></span>
-        </div>
-        <div class="grid-item">
-            <label>Dust Pollution</label>
-            <div class="grid-item-data" id="dust-sensor">N/A</div>
-            <span class="grid-item-ts" id="dust-sensor-ts"></span>
-        </div>
-        <div class="grid-item">
-            <label>CO2 Level</label>
-            <div class="grid-item-data" id="co2-sensor">N/A</div>
-            <span class="grid-item-ts" id="co2-sensor-ts"></span>
-        </div>
-    </div>
-
-    <div class="charts-section">
-        <div class="charts-header">
-            <h2>Today's Measurements</h2>
-            <select id="sensor-select">
-                <option value="temperature">Temperature (°C)</option>
-                <option value="humidity">Humidity (%)</option>
-                <option value="co2">CO2 (ppm)</option>
-                <option value="dust">Dust (pcs)</option>
-            </select>
-        </div>
-        <div class="chart-card">
-            <canvas id="chart-sensor"></canvas>
+        <div class="charts-section">
+            <div class="charts-header">
+                <h2>Today's Measurements</h2>
+                <select id="sensor-select">
+                    <option value="temperature">Temperature (°C)</option>
+                    <option value="humidity">Humidity (%)</option>
+                    <option value="co2">CO2 (ppm)</option>
+                    <option value="dust">Dust (pcs)</option>
+                </select>
+            </div>
+            <div class="chart-card">
+                <canvas id="chart-sensor"></canvas>
+            </div>
         </div>
     </div>
 </body>
