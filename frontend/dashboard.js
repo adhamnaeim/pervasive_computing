@@ -86,6 +86,13 @@ const SENSOR_CONFIG = {
     co2:         { url: `${API_BASE}/api/measurements/today/co2`,         key: "co2_ppm", label: "CO2 (ppm)",         color: "rgb(70, 132, 50)",  bg: "rgba(70, 132, 50, 0.15)" },
 };
 
+const GRID_SENSOR_MAP = {
+    "temp-sensor": "temperature",
+    "humidity-sensor": "humidity",
+    "dust-sensor": "dust",
+    "co2-sensor": "co2",
+};
+
 function formatTime(tsStr) {
     const d = new Date(tsStr);
     const hh = String(d.getHours()).padStart(2, "0");
@@ -139,6 +146,21 @@ async function loadSelectedSensor() {
 }
 
 document.getElementById("sensor-select").addEventListener("change", loadSelectedSensor);
+
+document.querySelectorAll(".grid-item").forEach((gridItem) => {
+    const sensorValueElement = gridItem.querySelector(".grid-item-data");
+    const sensorKey = sensorValueElement ? GRID_SENSOR_MAP[sensorValueElement.id] : null;
+
+    if (!sensorKey) {
+        return;
+    }
+
+    gridItem.addEventListener("click", () => {
+        const sensorSelect = document.getElementById("sensor-select");
+        sensorSelect.value = sensorKey;
+        loadSelectedSensor();
+    });
+});
 
 // Initial load + refresh every 30 s
 loadSelectedSensor();

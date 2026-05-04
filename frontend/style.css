@@ -69,6 +69,7 @@ h1, h2, label {
     border: 1px solid var(--light-green);
     border-radius: 4px;
     box-shadow: 4px 4px 0px var(--light-green);
+    cursor: pointer;
 }
 
 .grid-item.highlight {
